@@ -1,0 +1,106 @@
+{
+  "name": "covidcr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "npm run lint",
+    "lint": "xo --fix"
+  },
+  "dependencies": {
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
+    "clsx": "latest",
+    "date-fns": "^2.11.1",
+    "fuse.js": "^5.1.0",
+    "hashids": "^2.2.1",
+    "is-email": "^1.0.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "mongodb": "^3.5.5",
+    "ms": "^2.1.2",
+    "next": "9.3.3",
+    "nookies": "^2.2.1",
+    "notistack": "^0.9.9",
+    "phone": "^2.4.8",
+    "rc": "^1.2.8",
+    "react": "16.13.1",
+    "react-content-loader": "^5.0.2",
+    "react-copy-to-clipboard": "^5.0.2",
+    "react-dom": "16.13.1",
+    "react-ga": "^2.7.0",
+    "react-hook-form": "^5.2.0",
+    "react-pin-input": "^0.9.1",
+    "react-share": "^4.1.0",
+    "recharts": "^1.8.5",
+    "secure-pin": "^1.0.14",
+    "sms506": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-inline-react-svg": "^1.1.1",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-react": "^7.16.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "next-offline": "^5.0.0",
+    "prettier": "1.19.1",
+    "xo": "^0.25.3"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint",
+      "prettier --single-quote --no-semi --write --no-editorconfig",
+      "git add"
+    ]
+  },
+  "xo": {
+    "parser": "babel-eslint",
+    "extends": [
+      "prettier",
+      "prettier/react",
+      "plugin:react/recommended"
+    ],
+    "env": [
+      "browser",
+      "node",
+      "jest"
+    ],
+    "rules": {
+      "unicorn/regex-shorthand": 0,
+      "import/no-unresolved": 0,
+      "import/no-extraneous-dependencies": 0,
+      "import/no-unassigned-import": 0,
+      "import/extensions": 0,
+      "ava/no-only-test": 0,
+      "capitalized-comments": 0,
+      "camelcase": 0,
+      "complexity": 0,
+      "max-params": 0,
+      "no-await-in-loop": 0,
+      "react/react-in-jsx-scope": 0,
+      "react/prop-types": 0,
+      "react/no-find-dom-node": 0,
+      "lines-between-class-members": 0,
+      "no-useless-escape": 0,
+      "default-param-last": 0,
+      "unicorn/prefer-string-slice": 0,
+      "require-atomic-updates": 0
+    },
+    "ignores": [
+      "dist",
+      "scripts",
+      "renderer/.next",
+      "renderer/out"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}

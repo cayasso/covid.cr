@@ -1,0 +1,10 @@
+{
+  "name": "covidcr",
+  "public": true,
+  "version": 2,
+  "env": {
+    "API_SECRET": "@api-secret",
+    "MONGO_URL": "@mongo-url",
+    "SMS_KEY": "@sms-key"
+  }
+}

@@ -1,0 +1,16 @@
+node_modules/
+.next/
+scripts/
+dev
+*.log
+.DS_Store
+.covidrc
+.editorconfig
+.github
+.circle
+.vscode
+.next
+test
+*.md
+.secrets
+__tests__
