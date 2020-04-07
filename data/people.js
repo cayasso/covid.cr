@@ -20,18 +20,18 @@ export const FIELDS = [
   'symptoms',
   'history',
   'favorites',
-  'postalcode'
+  'postalcode',
 ]
 
 const createApi = ({ mongo, secret }) => {
   const db = createDb(mongo)
 
-  const normalize = data => {
+  const normalize = (data) => {
     return {
       ...pick(data, FIELDS),
       history: [],
       favorites: [],
-      role: 'user'
+      role: 'user',
     }
   }
 
@@ -86,15 +86,15 @@ const createApi = ({ mongo, secret }) => {
     data = pick(data, FIELDS)
     data.updated = Date.now()
 
-    const params = { $set: data }
+    const parameters = { $set: data }
 
     if (data.symptoms || data.feeling) {
-      params.$push = {
-        history: { time: data.updated, symptoms: data.symptoms, feeling: data.feeling }
+      parameters.$push = {
+        history: { time: data.updated, symptoms: data.symptoms, feeling: data.feeling },
       }
     }
 
-    const person = await people.updateOne(query, params)
+    const person = await people.updateOne(query, parameters)
     if (!person) throw createError('No se pudo actualizar')
     return getRating(person)
   }
@@ -138,7 +138,7 @@ const createApi = ({ mongo, secret }) => {
 
     return {
       updated: person.lastCodeUpdate,
-      code: person.code ? '****' + person.code.slice(-2) : null
+      code: person.code ? '****' + person.code.slice(-2) : null,
     }
   }
 

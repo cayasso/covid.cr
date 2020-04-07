@@ -16,30 +16,30 @@ import { secondsToTime } from '../lib/utils'
 
 const WAIT_TIME = 60 * 1000 * 5 // 5 mins
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   margin: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
   inline: {
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 }))
 
 const Verify = ({ user }) => {
   const { enqueueSnackbar: notify } = useSnackbar()
   const { signin, sendCode } = useUser()
   const [loading, setLoading] = useState(false)
-  const [params, setParams] = useState({})
+  const [parameters, setParameters] = useState({})
   const [delta, setDelta] = useState(0)
   const router = useRouter()
   const styles = useStyles()
   const theme = useTheme()
   const input = useRef()
 
-  const { phone, code } = params
+  const { phone, code } = parameters
 
   useEffect(() => {
     const { query = {} } = router
@@ -52,7 +52,7 @@ const Verify = ({ user }) => {
       verification = { ...query, updated: parseInt(query.updated, 10) }
     }
 
-    updateParams(verification)
+    updateParameters(verification)
     router.push('/verify', '/verify', { shallow: true })
     setDelta(verification.updated + WAIT_TIME - Date.now())
   }, [])
@@ -67,17 +67,17 @@ const Verify = ({ user }) => {
     if (user) router.replace('/dashboard')
   }, [user])
 
-  const updateParams = data => {
-    setParams(data)
+  const updateParameters = (data) => {
+    setParameters(data)
     storage.set('verify', data)
   }
 
-  const onSubmit = async code => {
+  const onSubmit = async (code) => {
     try {
       input.current.clear()
       setLoading(true)
       await signin(phone, code)
-      setParams({})
+      setParameters({})
       router.replace('/dashboard')
     } catch (error) {
       console.log(error)
@@ -90,7 +90,7 @@ const Verify = ({ user }) => {
   const resend = async () => {
     try {
       const { updated } = await sendCode(phone)
-      updateParams({ phone, updated })
+      updateParameters({ phone, updated })
       notify(`Tu código de acceso ha sido enviado a ${phone}`, { variant: 'success' })
     } catch (error) {
       console.log(error)
@@ -135,7 +135,7 @@ const Verify = ({ user }) => {
               backgroundColor: theme.palette.common.white,
               border: `2px solid ${theme.palette.text.primary}`,
               fontSize: '1.4rem',
-              margin: 2
+              margin: 2,
             }}
             inputFocusStyle={{ border: `2px solid ${theme.palette.primary.main}` }}
             onComplete={onSubmit}
@@ -159,7 +159,7 @@ const Verify = ({ user }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   return { props: { ...session } }
 }

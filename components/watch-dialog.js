@@ -13,20 +13,20 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle'
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   content: {
     backgroundColor: '#f5f5f8',
-    padding: '0 8px'
+    padding: '0 8px',
   },
   icon: {
     fontSize: 24,
-    fill: '#CCC'
+    fill: '#CCC',
   },
   checkedIcon: {
-    fill: theme.palette.primary.main
+    fill: theme.palette.primary.main,
   },
   text: {
-    marginRight: '0.2rem'
+    marginRight: '0.2rem',
   },
   formControl: {
     marginRight: 0,
@@ -37,25 +37,25 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     padding: '8px 0',
     boxShadow: '0 1px 3px rgba(0,0,0,.1)',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   label: {
     width: '100%',
     paddingRight: 16,
     alignContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   labelConainer: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    fontWeight: '900'
+    fontWeight: '900',
   },
   aside: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 }))
 
 const CantonDialog = ({ title, data, source, open, onAction, ...props }) => {
@@ -69,19 +69,19 @@ const CantonDialog = ({ title, data, source, open, onAction, ...props }) => {
     }
   }, [props.selected, open])
 
-  const onChange = (e, checked) => {
-    const { value } = e.target
+  const onChange = (event, checked) => {
+    const { value } = event.target
 
     if (checked) {
       if (!selected.includes(value)) {
-        setSelected(s => [...s, value])
+        setSelected((s) => [...s, value])
       }
     } else {
-      setSelected(s => s.filter(v => value !== v))
+      setSelected((s) => s.filter((v) => value !== v))
     }
   }
 
-  const renderItem = code => {
+  const renderItem = (code) => {
     const checked = selected.includes(code)
 
     return (
@@ -144,7 +144,7 @@ const CantonDialog = ({ title, data, source, open, onAction, ...props }) => {
 
 CantonDialog.defaultProps = {
   onAction: () => {},
-  selected: []
+  selected: [],
 }
 
 export default CantonDialog

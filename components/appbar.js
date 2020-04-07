@@ -26,23 +26,23 @@ import AppsIcon from '@material-ui/icons/Apps'
 import Button from './button'
 import * as tokens from '../lib/tokens'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
-    marginRight: -theme.spacing(2)
+    marginRight: -theme.spacing(2),
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   icon: {
-    marginRight: 16
+    marginRight: 16,
   },
   button: {
     marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(0)
-  }
+    marginBottom: theme.spacing(0),
+  },
 }))
 
 const isMissingData = (user = {}) => {
@@ -52,21 +52,21 @@ const isMissingData = (user = {}) => {
 const AppBar = ({ title = '', backLabel, user, onBack }) => {
   const styles = useStyles()
   const router = useRouter()
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
+  const [anchorElement, setAnchorElement] = useState(null)
+  const open = Boolean(anchorElement)
   const isSignedIn = Boolean(user)
 
   const { pathname: route } = router
 
-  const onMenu = event => {
-    setAnchorEl(event.currentTarget)
+  const onMenu = (event) => {
+    setAnchorElement(event.currentTarget)
   }
 
   const onClose = () => {
-    setAnchorEl(null)
+    setAnchorElement(null)
   }
 
-  const navigate = to => {
+  const navigate = (to) => {
     router.push(to)
     onClose()
   }
@@ -113,7 +113,7 @@ const AppBar = ({ title = '', backLabel, user, onBack }) => {
               keepMounted
               open={open}
               onClose={onClose}
-              anchorEl={anchorEl}
+              anchorEl={anchorElement}
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
               transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             >

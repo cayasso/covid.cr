@@ -52,19 +52,19 @@ const Symptoms = ({ user }) => {
     router.push('/results')
   }
 
-  const onChange = (e, active) => {
-    const key = e.target.value
+  const onChange = (event, active) => {
+    const key = event.target.value
 
     if (active) {
       if (!data.includes(key)) {
-        setData(data => [...data, key])
+        setData((data) => [...data, key])
       }
     } else {
-      setData(data => data.filter(r => r !== key))
+      setData((data) => data.filter((r) => r !== key))
     }
   }
 
-  const renderItem = item => {
+  const renderItem = (item) => {
     return (
       <Question
         key={item.value}
@@ -102,7 +102,7 @@ const Symptoms = ({ user }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   return { props: { ...session } }
 }

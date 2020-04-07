@@ -5,19 +5,19 @@ import { decode } from '../../../lib/auth'
 
 const { signin } = createPeople(config)
 
-export default async (req, res) => {
-  if (req.method !== 'GET') {
-    return res.status(404).end('Not found')
+export default async (request, response) => {
+  if (request.method !== 'GET') {
+    return response.status(404).end('Not found')
   }
 
   try {
-    const { code } = req.query
+    const { code } = request.query
     const data = decode(code)
     const { token } = await signin(data || {})
-    tokens.set(token, { req, res })
-    res.writeHead(302, { Location: `/?mode=login` })
-    res.end()
+    tokens.set(token, { req: request, response })
+    response.writeHead(302, { Location: `/?mode=login` })
+    response.end()
   } catch (_) {
-    res.status(401).end('Unauthorized')
+    response.status(401).end('Unauthorized')
   }
 }

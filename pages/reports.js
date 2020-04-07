@@ -17,9 +17,9 @@ import * as storage from '../lib/storage'
 import { fetch } from '../lib/fetch'
 import { cantones, provincias } from '../lib/postal-codes'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   card: {
     height: '100%',
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    borderRadius: 12
+    borderRadius: 12,
   },
   cardContent: {
     height: '100%',
@@ -36,26 +36,26 @@ const useStyles = makeStyles(theme => ({
     border: '1px dashed ' + theme.palette.primary.main,
     borderRadius: 12,
     justifyContent: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   button: {
     color: theme.palette.primary.main,
     height: '100%',
     width: '100%',
     display: 'flex',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 }))
 
-const sort = cases => (a, b) => {
+const sort = (cases) => (a, b) => {
   return cases[b] - cases[a]
 }
 
 const getTotals = ({ canton = {}, province = {}, country = {} } = {}) => {
   const totalProvinceCases = Object.keys(province).reduce((acc, code) => province[code] + acc, 0)
   const totalCantonCases = Object.keys(canton).reduce((acc, code) => canton[code] + acc, 0)
-  const totalCountryCases = Object.values(country).reduce((acc, val) => {
-    return val + acc
+  const totalCountryCases = Object.values(country).reduce((acc, value) => {
+    return value + acc
   }, 0)
 
   return [totalProvinceCases, totalCantonCases, totalCountryCases]
@@ -96,7 +96,7 @@ const Reports = ({ user, report, countries }) => {
     setCountryDialog(false)
   }
 
-  const onUpdate = async favorites => {
+  const onUpdate = async (favorites) => {
     storage.set('favorites', favorites)
 
     if (user) {
@@ -104,8 +104,8 @@ const Reports = ({ user, report, countries }) => {
     }
   }
 
-  const onRemove = code => {
-    const favorites = selected.filter(s => s !== code) || []
+  const onRemove = (code) => {
+    const favorites = selected.filter((s) => s !== code) || []
     setSelected(favorites)
     onUpdate(favorites)
   }
@@ -132,10 +132,10 @@ const Reports = ({ user, report, countries }) => {
 
   const [totalProvinceCases, totalCantonCases, totalCountryCases] = getTotals({
     ...report,
-    country: countryValues
+    country: countryValues,
   })
 
-  const renderProvince = code => {
+  const renderProvince = (code) => {
     return (
       <Case
         key={code}
@@ -150,7 +150,7 @@ const Reports = ({ user, report, countries }) => {
     )
   }
 
-  const renderCanton = code => {
+  const renderCanton = (code) => {
     return (
       <Case
         user={user}
@@ -165,7 +165,7 @@ const Reports = ({ user, report, countries }) => {
     )
   }
 
-  const renderCountry = code => {
+  const renderCountry = (code) => {
     return (
       <Case
         user={user}
@@ -280,7 +280,7 @@ const Reports = ({ user, report, countries }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   const { req } = ctx
   const protocol = req.protocol ? req.protocol : `http`
@@ -288,7 +288,7 @@ export const getServerSideProps = async ctx => {
 
   const [report, countries] = await Promise.all([
     fetch(`${host}/api/cases`),
-    fetch(`${host}/api/cases?country=ALL`)
+    fetch(`${host}/api/cases?country=ALL`),
   ])
 
   return { props: { ...session, report, countries } }

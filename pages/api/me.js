@@ -15,12 +15,12 @@ const update = ({ user, body }) => {
 }
 
 export default λ(
-  auth((req, res) => {
-    switch (req.method) {
+  auth((request, response) => {
+    switch (request.method) {
       case 'GET':
-        return fetch(req, res)
+        return fetch(request, response)
       case 'PATCH':
-        return update(req, res)
+        return update(request, response)
       default:
     }
 

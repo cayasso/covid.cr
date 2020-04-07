@@ -11,21 +11,21 @@ import Button from '../components/button'
 import useUser from '../hooks/user'
 import { getSession } from '../lib/auth'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   code: {
     width: '30%',
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   margin: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
   },
   inline: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   number: {
-    width: '65%'
-  }
+    width: '65%',
+  },
 }))
 
 const Login = ({ user }) => {
@@ -59,8 +59,8 @@ const Login = ({ user }) => {
     }
   }
 
-  const onChange = e => {
-    setPhone(e.target.value)
+  const onChange = (event) => {
+    setPhone(event.target.value)
   }
 
   useEffect(() => {
@@ -98,7 +98,7 @@ const Login = ({ user }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   return { props: { ...session } }
 }

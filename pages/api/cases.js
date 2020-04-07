@@ -6,14 +6,14 @@ import {
   remoteFetchByDate,
   remoteFetchByCantons,
   remoteFetchHistory,
-  remoteFetchByCountry
+  remoteFetchByCountry,
 } from '../../data/reports'
 import config from '../../config'
 import createDb from '../../lib/db'
 
 const db = createDb(config.mongo)
 
-const fetchSummary = async date => {
+const fetchSummary = async (date) => {
   const reports = await db.get('reports')
   const pipeline = []
 
@@ -29,8 +29,8 @@ const fetchSummary = async date => {
       active: '$active',
       recovered: '$recovered',
       deceased: '$deceased',
-      total: { $sum: ['$active', '$recovered', '$deceased'] }
-    }
+      total: { $sum: ['$active', '$recovered', '$deceased'] },
+    },
   })
 
   pipeline.push({ $sort: { date: -1 } })
@@ -44,13 +44,13 @@ const updateCantons = async (date, data = {}) => {
   return reports.updateOne({ date }, { ...data, canton }, { upsert: true })
 }
 
-const normalize = data => {
+const normalize = (data) => {
   data.total = data.active + data.recovered + data.deceased
   return data
 }
 
-const fetch = async ({ query }, res) => {
-  const isRecursive = !res
+const fetch = async ({ query }, response) => {
+  const isRecursive = !response
   const reports = await db.get('reports')
   const inDate = query.date && isRecursive ? toDate(query.date) : null
   const compareDate = inDate || new Date()
@@ -78,7 +78,7 @@ const fetch = async ({ query }, res) => {
   } else {
     if (!date) {
       const data = await reports.findMany({}, { projection: { _id: 0 }, sort: '-date' })
-      let todayReport = data.find(r => r.date === today)
+      let todayReport = data.find((r) => r.date === today)
 
       if (!todayReport) {
         todayReport = await remoteFetchByDate(today)
@@ -96,7 +96,7 @@ const fetch = async ({ query }, res) => {
 
     if (!report) {
       const data = await remoteFetchHistory()
-      report = data.find(item => item.date === date)
+      report = data.find((item) => item.date === date)
     }
 
     if (report && (!report.canton || isEmpty(report.canton))) {
@@ -119,10 +119,10 @@ const fetch = async ({ query }, res) => {
   return normalize(report)
 }
 
-export default λ((req, res) => {
-  switch (req.method) {
+export default λ((request, response) => {
+  switch (request.method) {
     case 'GET':
-      return fetch(req, res)
+      return fetch(request, response)
     default:
   }
 
