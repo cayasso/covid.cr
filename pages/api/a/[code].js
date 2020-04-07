@@ -14,7 +14,7 @@ export default async (request, response) => {
     const { code } = request.query
     const data = decode(code)
     const { token } = await signin(data || {})
-    tokens.set(token, { req: request, response })
+    tokens.set(token, { req: request, res: response })
     response.writeHead(302, { Location: `/?mode=login` })
     response.end()
   } catch (_) {
