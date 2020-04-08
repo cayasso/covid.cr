@@ -11,19 +11,19 @@ import Layout from '../components/layout'
 import { getSession } from '../lib/auth'
 import { fetch } from '../lib/fetch'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     marginBottom: 20,
     marginTop: 20,
-    borderRadius: 12
+    borderRadius: 12,
   },
   cardContent: {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#311B92'
+    backgroundColor: '#311B92',
   },
   box: {
     display: 'flex',
@@ -37,22 +37,22 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 11,
     width: '48%',
     marginBottom: theme.spacing(3),
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
 
   title: {
-    fontSize: '1.2rem'
+    fontSize: '1.2rem',
   },
   multimedia: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   video: {
-    width: '100%'
+    width: '100%',
   },
   image: {},
   lightText: {
-    color: theme.palette.common.white
-  }
+    color: theme.palette.common.white,
+  },
 }))
 
 const isMissingData = (user = {}) => {
@@ -103,7 +103,7 @@ const Dashboard = ({ user, summary }) => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          flexFlow: 'wrap'
+          flexFlow: 'wrap',
         }}
       >
         <div className={styles.box}>
@@ -188,7 +188,7 @@ const Dashboard = ({ user, summary }) => {
           style={{
             display: 'flex',
             justifyContent: 'flex-start',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           <img
@@ -296,12 +296,66 @@ const Dashboard = ({ user, summary }) => {
           </video>
         </div>
 
+        <div className={styles.multimedia}>
+          <Typography variant="h5" className={styles.title}>
+            Active su escudo
+          </Typography>
+
+          <video
+            className={styles.video}
+            preload="none"
+            controls="controls"
+            poster="https://www.ccss.sa.cr/web/coronavirus/videos/04/04.png"
+            title="Active su escudo"
+          >
+            <source
+              src="https://www.ccss.sa.cr/web/coronavirus/videos/04/04.mp4"
+              type="video/mp4"
+            />
+            <source
+              src="https://www.ccss.sa.cr/web/coronavirus/videos/04/04.webm"
+              type="video/webm"
+            />
+            <source
+              src="https://www.ccss.sa.cr/web/coronavirus/videos/04/04.ogv"
+              type="video/ogg"
+            />
+          </video>
+        </div>
+
+        <div className={styles.multimedia}>
+          <Typography variant="h5" className={styles.title}>
+            Diabéticos e hipertensos
+          </Typography>
+
+          <video
+            className={styles.video}
+            preload="none"
+            controls="controls"
+            poster="https://www.ccss.sa.cr/web/coronavirus/videos/14/14.jpg"
+            title="Diabéticos e hipertensos"
+          >
+            <source
+              src="https://www.ccss.sa.cr/web/coronavirus/videos/14/14.mp4"
+              type="video/mp4"
+            />
+            <source
+              src="https://www.ccss.sa.cr/web/coronavirus/videos/14/14.webm"
+              type="video/webm"
+            />
+            <source
+              src="https://www.ccss.sa.cr/web/coronavirus/videos/14/14.ogv"
+              type="video/ogg"
+            />
+          </video>
+        </div>
+
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <ButtonLink
             variant="text"
             style={{
               marginTop: 0,
-              marginLeft: 16
+              marginLeft: 16,
             }}
             size="small"
             fullWidth={false}
@@ -315,7 +369,7 @@ const Dashboard = ({ user, summary }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   const { req } = ctx
   const protocol = req.protocol ? req.protocol : `http`

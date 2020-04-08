@@ -57,6 +57,12 @@ const Verify = ({ user }) => {
     setDelta(verification.updated + WAIT_TIME - Date.now())
   }, [])
 
+  useEffect(() => {
+    if (parameters.updated) {
+      setDelta(parameters.updated + WAIT_TIME - Date.now())
+    }
+  }, [parameters.updated])
+
   const { time, start } = useCountDown(delta)
 
   useEffect(() => {

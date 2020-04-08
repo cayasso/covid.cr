@@ -115,7 +115,13 @@ const createApi = ({ mongo, secret }) => {
     }
 
     const time = Date.now()
-    const data = { phone, updated: time }
+    const data = { phone, updated: time, lastSignedIn: time }
+
+    if (!person.confirmed) {
+      data.confirmedTime = time
+      data.confirmed = true
+    }
+
     person = await people.updateOne({ phone }, data)
     const token = await createToken(pick(person, CLAIMS), { secret, ttl: '120d' })
     return { token, user: person }

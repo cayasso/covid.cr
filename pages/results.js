@@ -5,37 +5,37 @@ import formatDate from 'date-fns/format'
 import { useTheme, makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
+import MuiLink from '@material-ui/core/Link'
 import Card from '@material-ui/core/Card'
 import Layout from '../components/layout'
 import Bullet from '../components/bullet'
 import ButtonLink from '../components/button-link'
-import Link from '../components/link'
 import { getSession } from '../lib/auth'
 import getRating from '../lib/rating'
 import * as cons from '../constants'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   line: {
     display: 'flex',
-    margin: '30px 0'
+    margin: '30px 0',
   },
   card: {
     paddingLeft: 16,
     paddingRight: 16,
     marginBottom: 20,
     marginTop: 20,
-    borderRadius: 12
+    borderRadius: 12,
   },
   hero: {
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
   button: {
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(2),
     color: theme.palette.common.white,
-    borderColor: theme.palette.common.white
-  }
+    borderColor: theme.palette.common.white,
+  },
 }))
 
 const isMissingData = (user = {}) => {
@@ -209,12 +209,12 @@ const Result = ({ user }) => {
                     <strong>cubrebocas</strong> ya que dentro de tus síntomas, reportas haber
                     perdido el sentido del olfato o del gusto. Las autoridades de salud han emitido
                     esta recomendación importante.{' '}
-                    <Link
+                    <MuiLink
                       style={{ color: 'red' }}
                       href="https://www.youtube.com/watch?v=OVjENDhFH1w"
                     >
                       Ver noticia
-                    </Link>
+                    </MuiLink>
                   </span>
                 </Typography>
               )}
@@ -286,12 +286,12 @@ const Result = ({ user }) => {
                     <strong>cubrebocas</strong> ya que dentro de tus síntomas, reportas haber
                     perdido el sentido del olfato o del gusto. Las autoridades de salud han emitido
                     esta recomendación importante.{' '}
-                    <Link
+                    <MuiLink
                       style={{ color: 'red' }}
                       href="https://www.youtube.com/watch?v=OVjENDhFH1w"
                     >
                       Ver noticia
-                    </Link>
+                    </MuiLink>
                   </span>
                 </Typography>
               )}
@@ -321,7 +321,7 @@ const Result = ({ user }) => {
                       height: 18,
                       width: 18,
                       marginTop: 8,
-                      borderRadius: 20
+                      borderRadius: 20,
                     }}
                   ></div>
                   <Typography variant="h5" gutterBottom>
@@ -334,7 +334,7 @@ const Result = ({ user }) => {
 
                   {item.symptoms.length > 0 ? (
                     <Fragment>
-                      {item.symptoms.map(symptom => {
+                      {item.symptoms.map((symptom) => {
                         return (
                           <Typography key={symptom} color="textSecondary" gutterBottom>
                             {cons.symptomsMap[symptom]}{' '}
@@ -363,7 +363,7 @@ const Result = ({ user }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   return { props: { ...session } }
 }

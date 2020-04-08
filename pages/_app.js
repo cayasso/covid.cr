@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import App from 'next/app'
 import Head from 'next/head'
-import router from 'next/router'
+import Router from 'next/router'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { SnackbarProvider } from 'notistack'
@@ -21,11 +21,11 @@ export default class MyApp extends App {
     if (!window.ga) analytics.init()
     analytics.logPageView()
 
-    router.events.on('routeChangeComplete', analytics.logPageView)
+    Router.events.on('routeChangeComplete', analytics.logPageView)
   }
 
   componentWillUnmount() {
-    router.events.off('routeChangeComplete', analytics.logPageView)
+    Router.events.off('routeChangeComplete', analytics.logPageView)
   }
 
   render() {

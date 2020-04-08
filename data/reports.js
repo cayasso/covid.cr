@@ -51,32 +51,57 @@ export const remoteFetchGlobal = async () => {
 }
 
 export const remoteFetchAllCountries = async () => {
-  const response = await fetchJson(`https://api.thevirustracker.com/free-api?countryTotals=ALL`)
-  return Object.keys(response.countryitems[0]).map((key) => {
-    const data = response.countryitems[0][key]
+  try {
+    const response = await fetchJson(`https://www.trackcorona.live/api/countries/`)
+
+    return response.data.map((data) => {
+      return {
+        code: data.country_code.toUpperCase(),
+        name: data.location,
+        total: data.confirmed,
+        recovered: data.recovered,
+        deceased: data.dead,
+        active: data.confirmed - data.recovered - data.dead,
+      }
+    })
+  } catch (error) {
+    console.log(error)
+    const response = await fetchJson(`https://api.thevirustracker.com/free-api?countryTotals=ALL`)
+
+    return Object.keys(response.countryitems[0]).map((key) => {
+      const data = response.countryitems[0][key]
+
+      return {
+        code: data.code,
+        name: data.title,
+        total: data.total_cases,
+        recovered: data.total_recovered,
+        deceased: data.total_deaths,
+        active: data.total_active_cases,
+      }
+    })
+  }
+}
+
+export const remoteFetchByCountry = async (code = 'ALL') => {
+  if (code === 'ALL') return remoteFetchAllCountries()
+
+  try {
+    const response = await remoteFetchAllCountries()
+    return response.find((item) => item.code === code)
+  } catch (error) {
+    console.log(error)
+
+    const response = await fetchJson(`https://thevirustracker.com/free-api?countryTotal=${code}`)
+    const [data] = response.countrydata
 
     return {
-      code: data.code,
-      name: data.title,
+      code: data.info.code,
       total: data.total_cases,
       recovered: data.total_recovered,
       deceased: data.total_deaths,
       active: data.total_active_cases,
     }
-  })
-}
-
-export const remoteFetchByCountry = async (code = 'ALL') => {
-  if (code === 'ALL') return remoteFetchAllCountries()
-  const response = await fetchJson(`https://thevirustracker.com/free-api?countryTotal=${code}`)
-  const [data] = response.countrydata
-
-  return {
-    code: data.info.code,
-    total: data.total_cases,
-    recovered: data.total_recovered,
-    deceased: data.total_deaths,
-    active: data.total_active_cases,
   }
 }
 

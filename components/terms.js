@@ -3,22 +3,27 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Link from './link'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   margin: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
-  }
+    marginBottom: theme.spacing(1),
+  },
 }))
 
-const TermLinks = () => {
+const TermLinks = (props) => {
   const styles = useStyles()
 
   return (
-    <Typography className={styles.margin} variant="body2" color="textSecondary" align="center">
+    <Typography className={styles.margin} color="textSecondary" {...props}>
       {'Al continuar con el uso de esta apliacación acepto los '}
-      <Link href="/terms">términos de uso</Link>
+      <Link rel="noopener" target="_blank" href="/terms">
+        Términos de Uso
+      </Link>
       {' y '}
-      <Link href="/privacy">privacidad</Link>.
+      <Link rel="noopener" target="_blank" href="/privacy">
+        Política de Privacidad
+      </Link>
+      .
     </Typography>
   )
 }

@@ -7,23 +7,23 @@ import Link from '@material-ui/core/Link'
 import Layout from '../components/layout'
 import { getSession } from '../lib/auth'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     marginBottom: 20,
     marginTop: 20,
-    borderRadius: 12
+    borderRadius: 12,
   },
   title: {
-    fontSize: '1.2rem'
+    fontSize: '1.2rem',
   },
   multimedia: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   video: {
-    width: '100%'
-  }
+    width: '100%',
+  },
 }))
 
 const Videos = ({ user }) => {
@@ -1160,7 +1160,7 @@ const Videos = ({ user }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   return { props: { ...session } }
 }

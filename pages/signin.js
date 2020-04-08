@@ -4,10 +4,11 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import FormGroup from '@material-ui/core/FormGroup'
+import Checkbox from '@material-ui/core/Checkbox'
 import { useRouter } from 'next/router'
 import Layout from '../components/layout'
 import Button from '../components/button'
-// import TermLinks from '../components/terms'
+import Link from '../components/link'
 import useUser from '../hooks/user'
 import { getSession } from '../lib/auth'
 
@@ -26,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
   number: {
     width: '65%',
   },
+  terms: {
+    justifyItems: 'center',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    marginTop: 30,
+  },
 }))
 
 const Login = ({ user }) => {
@@ -36,6 +43,7 @@ const Login = ({ user }) => {
   const [prefix] = useState('+506')
   const [phone, setPhone] = useState('')
   const [loading, setLoading] = useState(false)
+  const [accept, setAccept] = useState(false)
 
   const onSubmit = async () => {
     try {
@@ -87,13 +95,26 @@ const Login = ({ user }) => {
           />
           <TextField className={styles.number} variant="outlined" onChange={onChange} />
         </FormGroup>
+
+        <FormGroup className={styles.terms} row>
+          <Checkbox color="primary" checked={accept} onChange={(_, accept) => setAccept(accept)} />
+          <Typography variant="body2" color="textSecondary">
+            {'Acepta los '}
+            <Link rel="noopener" target="_blank" href="/terms">
+              Términos de Uso
+            </Link>
+            {' y la '}
+            <Link rel="noopener" target="_blank" href="/privacy">
+              Política de Privacidad
+            </Link>
+            .
+          </Typography>
+        </FormGroup>
       </FormGroup>
-      <Button disabled={loading} loading={loading} onClick={onSubmit}>
+
+      <Button disabled={!accept || loading} loading={loading} onClick={onSubmit}>
         Validar
       </Button>
-      {
-        // <TermLinks />
-      }
     </Layout>
   )
 }

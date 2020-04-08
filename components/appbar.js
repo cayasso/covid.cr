@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/core/styles'
 import BaseAppBar from '@material-ui/core/AppBar'
@@ -49,7 +49,7 @@ const isMissingData = (user = {}) => {
   return !(user.risk && user.symptoms)
 }
 
-const AppBar = ({ title = '', backLabel, user, onBack }) => {
+const AppBar = ({ title = '', transparent, backLabel, user, onBack }) => {
   const styles = useStyles()
   const router = useRouter()
   const [anchorElement, setAnchorElement] = useState(null)
@@ -61,6 +61,10 @@ const AppBar = ({ title = '', backLabel, user, onBack }) => {
   const onMenu = (event) => {
     setAnchorElement(event.currentTarget)
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const onClose = () => {
     setAnchorElement(null)
@@ -74,8 +78,8 @@ const AppBar = ({ title = '', backLabel, user, onBack }) => {
   return (
     <div className={styles.root}>
       <BaseAppBar
-        elevation={6}
-        style={{ backgroundColor: 'rgba(255,255,255,0.98)' }}
+        elevation={transparent ? 0 : 6}
+        style={{ backgroundColor: transparent ? 'transparent' : 'rgba(255,255,255,0.98)' }}
         position="fixed"
       >
         <Toolbar>

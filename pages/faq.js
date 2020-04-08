@@ -9,18 +9,18 @@ import Layout from '../components/layout'
 import Email from '../components/email'
 import { getSession } from '../lib/auth'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   panel: {
     borderRadius: 8,
     marginBottom: theme.spacing(2),
     '::before': {
-      height: 0
+      height: 0,
     },
     '&:last-child': {
       borderBottomLeftRadius: 8,
-      borderBottomRightRadius: 8
-    }
-  }
+      borderBottomRightRadius: 8,
+    },
+  },
 }))
 
 const Home = ({ user }) => {
@@ -34,7 +34,7 @@ const Home = ({ user }) => {
       my={4}
       backLabel="Inicio"
       user={user}
-      onBack={() => router.push('/')}
+      onBack={() => router.push(user ? '/dashboard' : '/')}
       style={{ textAlign: 'left' }}
     >
       <Typography style={{ fontSize: '3rem' }} variant="h1" gutterBottom>
@@ -82,6 +82,10 @@ const Home = ({ user }) => {
             seguimiento de reportes oficiales, gráficos diarios de la situación de casos en el país,
             videos informativos, entre otros, todo en una misma plataforma para que podamos
             mantenernos informados lo mejor posible en esta situación de emergencia.
+            <br />
+            <br />Y muy pronto (cuando tengamos más datos) ofreceremos un mapa de calor por cantón
+            de los síntomas para que las personas puedan tener un mejor panorama de la evolucioón
+            del virus sin exponer la privacidad de las personas.
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -192,8 +196,8 @@ const Home = ({ user }) => {
 
         <ExpansionPanelDetails>
           <Typography>
-            No. No vendemos ni entregamos tus datos a terceros, únicamente las autoridades de salud
-            o del gobierno prodrán tener acceso a los datos.
+            Absolutamente No. No vendemos ni entregamos tus datos a terceros, únicamente las
+            autoridades de salud o del gobierno podrán tener acceso a los datos.
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -229,7 +233,7 @@ const Home = ({ user }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   return { props: { ...session } }
 }

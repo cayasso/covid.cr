@@ -35,6 +35,7 @@ const fetchSummary = async (date) => {
 
   pipeline.push({ $sort: { date: -1 } })
   const data = await reports.aggregate(pipeline)
+
   return date ? data[0] : data
 }
 
