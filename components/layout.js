@@ -41,6 +41,8 @@ const Layout = ({
           <Link href="/terms">Términos de Uso</Link>
           {' | '}
           <Link href="/privacy">Política de Privacidad</Link>
+          {' | '}
+          <Link href="/faq">Preguntas frecuentes</Link>
           <br />
           <br />
           Hecho con{' '}

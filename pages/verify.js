@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { Fragment, useEffect, useState, useRef } from 'react'
 import { useSnackbar } from 'notistack'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
@@ -49,7 +49,7 @@ const Verify = ({ user }) => {
     if (!query.phone) {
       verification = storage.get('verify', {})
     } else if (query.phone && query.updated && query.code) {
-      verification = { ...query, updated: parseInt(query.updated, 10) }
+      verification = { ...query, updated: Number.parseInt(query.updated, 10) }
     }
 
     updateParameters(verification)
@@ -111,13 +111,20 @@ const Verify = ({ user }) => {
       </Typography>
 
       {code ? (
-        <Typography className={styles.margin} gutterBottom>
-          Nuestro registro nos indica que ya te hemos enviado un código de acceso que termina en{' '}
-          <strong>{code}</strong>.
-          <br />
-          <br />
-          Por favor ingresa los <strong>6 dígitos</strong> de tu código de acceso.
-        </Typography>
+        <Fragment>
+          <Typography
+            style={{ fontWeight: 500 }}
+            className={styles.margin}
+            color="secondary"
+            gutterBottom
+          >
+            Nuestro registro nos indica que ya te hemos enviado un código de acceso que termina en{' '}
+            <strong>{code}</strong>.
+          </Typography>
+          <Typography className={styles.margin} color="textSecondary" gutterBottom>
+            Por favor ingresa los <strong>6 dígitos</strong> de tu código de acceso.
+          </Typography>
+        </Fragment>
       ) : (
         <Typography className={styles.margin} gutterBottom>
           Te hemos enviado un mensaje de texto a <strong>{phone}</strong> con un código de acceso de
@@ -156,10 +163,12 @@ const Verify = ({ user }) => {
             : ''}
         </Button>
 
-        <Typography align="center">
-          Debido a la saturación de las redes, el mensaje podría tardar unos minutos en llegar. Te
-          pedimos tener paciencia.
-        </Typography>
+        {(!code || !code.includes('****')) && (
+          <Typography align="center">
+            Debido a la saturación de las redes, el mensaje podría tardar unos minutos en llegar. Te
+            pedimos tener paciencia.
+          </Typography>
+        )}
       </div>
     </Layout>
   )

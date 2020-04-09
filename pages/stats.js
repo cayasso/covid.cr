@@ -15,7 +15,7 @@ import {
   Cell,
   BarChart,
   Bar,
-  Legend
+  Legend,
 } from 'recharts'
 
 import Layout from '../components/layout'
@@ -24,25 +24,25 @@ import { getSession } from '../lib/auth'
 import { fetch } from '../lib/fetch'
 import { formatDate } from '../lib/utils'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   label: {
-    fontSize: '1rem'
+    fontSize: '1rem',
   },
   card: {
     width: '46%',
     marginTop: theme.spacing(1.5),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   container: {
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-between'
-  }
+    justifyContent: 'space-between',
+  },
 }))
 
 const Statistics = ({ user, report, history }) => {
@@ -53,7 +53,7 @@ const Statistics = ({ user, report, history }) => {
 
   const gender = [
     { name: 'Mujeres', value: report.gender.F },
-    { name: 'Hombres', value: report.gender.M }
+    { name: 'Hombres', value: report.gender.M },
   ]
 
   const GENDER_COLORS = ['#FE46A5', '#6200EA']
@@ -61,7 +61,7 @@ const Statistics = ({ user, report, history }) => {
   const age = [
     { name: 'Menores', value: report.age.juveniles },
     { name: 'Adultos', value: report.age.adults },
-    { name: 'Ancianos', value: report.age.elderlies }
+    { name: 'Ancianos', value: report.age.elderlies },
   ]
 
   const location = [
@@ -71,14 +71,14 @@ const Statistics = ({ user, report, history }) => {
     { name: 'Heredia', value: report.province['4'] },
     { name: 'Guanacaste', value: report.province['5'] },
     { name: 'Puntarenas', value: report.province['6'] },
-    { name: 'Limón', value: report.province['7'] }
+    { name: 'Limón', value: report.province['7'] },
   ]
 
   const NATIONALITY_COLORS = ['#6200EA', '#64B5F6']
 
   const nationality = [
     { name: 'Costarricenses', value: report.nationality.costarricans },
-    { name: 'Extranjeros', value: report.nationality.foreigners }
+    { name: 'Extranjeros', value: report.nationality.foreigners },
   ]
 
   return (
@@ -135,7 +135,7 @@ const Statistics = ({ user, report, history }) => {
                   textAnchor="middle"
                   tick={{ fontSize: 11, angle: -75 }}
                   tickMargin={16}
-                  tickFormatter={d => {
+                  tickFormatter={(d) => {
                     // return formatDate(d, 'DD MMMM \\d\\e YYYY')
                     return formatDate(d)
                   }}
@@ -178,7 +178,7 @@ const Statistics = ({ user, report, history }) => {
               <XAxis type="category" dataKey="name" tick={{ fontSize: 11 }} tickMargin={0} />
               <YAxis hide type="number" dataKey="value" label={{ dy: -90 }} />
               <Bar label={{ position: 'insideTop', dy: -24 }} dataKey="value" fill="#6200EA" />
-              <Tooltip cursor={false} formatter={value => [value]} />
+              <Tooltip cursor={false} formatter={(value) => [value]} />
             </BarChart>
           </ResponsiveContainer>
         </Card>
@@ -187,20 +187,22 @@ const Statistics = ({ user, report, history }) => {
           <ResponsiveContainer height={300}>
             <BarChart
               layout="vertical"
-              data={location.filter(i => i.value > 0).sort((a, b) => (a.value > b.value ? -1 : 1))}
+              data={location
+                .filter((i) => i.value > 0)
+                .sort((a, b) => (a.value > b.value ? -1 : 1))}
               margin={{ left: 32, right: 44, top: 8 }}
             >
               <YAxis type="category" dataKey="name" tick={{ fontSize: 12 }} tickMargin={10} />
               <XAxis hide type="number" dataKey="value" />
               <Bar label={{ position: 'insideRight', dx: 34 }} dataKey="value" fill="#6200EA" />
-              <Tooltip cursor={false} formatter={value => [value]} />
+              <Tooltip cursor={false} formatter={(value) => [value]} />
             </BarChart>
           </ResponsiveContainer>
         </Card>
 
         <Card title="Casos por nacionalidad">
           <ResponsiveContainer height={300}>
-            <PieChart>
+            <PieChart margin={{ left: 16, right: 16 }}>
               <Pie
                 label
                 data={nationality}
@@ -226,7 +228,7 @@ const Statistics = ({ user, report, history }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   const { req } = ctx
   const protocol = req.protocol ? req.protocol : `http`
@@ -234,7 +236,7 @@ export const getServerSideProps = async ctx => {
 
   const [report, history] = await Promise.all([
     fetch(`${host}/api/cases`),
-    fetch(`${host}/api/cases?history=1&summary=1`)
+    fetch(`${host}/api/cases?history=1&summary=1`),
   ])
 
   return { props: { ...session, report, history } }

@@ -84,8 +84,8 @@ const Home = ({ user }) => {
             mantenernos informados lo mejor posible en esta situación de emergencia.
             <br />
             <br />Y muy pronto (cuando tengamos más datos) ofreceremos un mapa de calor por cantón
-            de los síntomas para que las personas puedan tener un mejor panorama de la evolucioón
-            del virus sin exponer la privacidad de las personas.
+            de los síntomas para que las personas puedan tener un mejor panorama de la evolución del
+            virus sin exponer la privacidad de las personas.
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>

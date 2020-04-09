@@ -80,9 +80,19 @@ const Login = ({ user }) => {
       <Typography variant="h1" gutterBottom>
         Ingresa tu teléfono móvil
       </Typography>
-      <Typography className={styles.margin} color="textSecondary" gutterBottom>
-        Solicitamos tu teléfono móvil con el único propósito de validar que eres una persona real y
-        evitar el ingreso de datos falsos.
+      <Typography className={styles.margin} gutterBottom>
+        Solicitamos tu teléfono móvil con el único propósito de validar que eres una persona real,
+        evitar el ingreso de datos falsos y que te contacten autoridades de salud en caso de que
+        tengas alguna emergencia de salud.
+        <br />
+        <br />
+        En caso de dudas aquí puedes leer más sobre nuestra{' '}
+        <strong>
+          <Link rel="noopener" target="_blank" href="/privacy">
+            Política de Privacidad
+          </Link>
+        </strong>
+        .
       </Typography>
       <FormGroup>
         <FormGroup className={styles.inline} row>
