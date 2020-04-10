@@ -101,10 +101,10 @@ const Home = ({ user }) => {
             mediante un código de acceso que se envia por mensaje de texto (SMS).
             <br />
             <br />
-            Aparte del teléfono también se solicita datos demográficos como <strong>
+            Aparte del teléfono también se solicitan datos demográficos como <strong>
               edad
             </strong>, <strong>sexo</strong>, <strong>provincia</strong>, <strong>cantón</strong> y{' '}
-            <strong>distrito</strong>, estos para generar reportes y gráficos de interes público.
+            <strong>distrito</strong>, estos para generar reportes y gráficos de interés público.
             <br />
             <br />Y finalmente la aplicación recopila los{' '}
             <strong>datos de las autoevaluaciones</strong> para que las personas puedan darle
@@ -225,7 +225,7 @@ const Home = ({ user }) => {
 
         <ExpansionPanelDetails>
           <Typography>
-            Puede escribanos al <Email email="covidcrapp@gmail.com" />.
+            Puede escribanos al <Email email="team@gmail.com" />.
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>

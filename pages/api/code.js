@@ -13,7 +13,7 @@ const fetch = async (request) => {
 
 const send = async (request) => {
   try {
-    const { phone, code, lastCodeUpdate: updated } = await createCode(request.body)
+    const { phone, code, updated } = await createCode(request.body)
     const { origin } = request.headers
     const response = await sendSms(
       phone,

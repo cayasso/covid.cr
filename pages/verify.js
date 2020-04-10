@@ -44,7 +44,7 @@ const Verify = ({ user }) => {
   useEffect(() => {
     const { query = {} } = router
 
-    let verification = {}
+    let verification = { ...query }
 
     if (!query.phone) {
       verification = storage.get('verify', {})

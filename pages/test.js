@@ -10,7 +10,7 @@ import { getSession } from '../lib/auth'
 import * as cons from '../constants'
 
 const isMissingData = (user = {}) => {
-  return !(user.phone && user.age && user.sex && user.province && user.canton && user.district)
+  return !(user.age && user.sex && user.province && user.canton && user.district)
 }
 
 const Symptoms = ({ user }) => {

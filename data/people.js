@@ -1,4 +1,4 @@
-import { pick, isNumber, isString } from 'lodash'
+import { omit, pick, isNumber, isString } from 'lodash'
 import isEmail from 'is-email'
 import createDb from '../lib/db'
 import { toPhone, createError, isPhone } from '../lib/utils'
@@ -23,17 +23,17 @@ export const FIELDS = [
   'postalcode',
 ]
 
+export const PRIVATE_FIELDS = [
+  'lastCodeUpdate',
+  'confirmed',
+  'confirmedTime',
+  'lastSignedIn',
+  'phone',
+  'code',
+]
+
 const createApi = ({ mongo, secret }) => {
   const db = createDb(mongo)
-
-  const normalize = (data) => {
-    return {
-      ...pick(data, FIELDS),
-      history: [],
-      favorites: [],
-      role: 'user',
-    }
-  }
 
   const fetch = async ({ id, user, ...query }) => {
     const people = await db.get('people')
@@ -43,34 +43,12 @@ const createApi = ({ mongo, secret }) => {
     return id ? getRating(doc) : doc
   }
 
-  const create = async ({ user, ...data }) => {
-    const people = await db.get('people')
-
-    if (data.age) {
-      data.age = parseInt(data.age, 10)
-    }
-
-    if (!['M', 'F'].includes(data.sex)) {
-      throw createError('Valor sexo inválido, debe ser F ó M')
-    } else if (data.age && !isNumber(data.age)) {
-      throw createError('Edad inválida')
-    } else if (data.phone && !(data.phone = toPhone(data.phone))) {
-      throw createError('Teléfono inválido')
-    } else if (data.email && !isEmail(data.email)) {
-      throw createError('Email inválido')
-    }
-
-    data = normalize(data)
-    data.createdAt = Date.now()
-    return people.updateOne({ code: data.code }, data, { upsert: true })
-  }
-
   const update = async ({ user, id, ...data }) => {
     const people = await db.get('people')
     const query = { _id: user._id }
 
     if (data.age) {
-      data.age = parseInt(data.age, 10)
+      data.age = Number.parseInt(data.age, 10)
     }
 
     if (data.sex && !['M', 'F'].includes(data.sex)) {
@@ -96,7 +74,7 @@ const createApi = ({ mongo, secret }) => {
 
     const person = await people.updateOne(query, parameters)
     if (!person) throw createError('No se pudo actualizar')
-    return getRating(person)
+    return getRating(omit(person, PRIVATE_FIELDS))
   }
 
   const signin = async ({ code, phone }) => {
@@ -124,7 +102,7 @@ const createApi = ({ mongo, secret }) => {
 
     person = await people.updateOne({ phone }, data)
     const token = await createToken(pick(person, CLAIMS), { secret, ttl: '120d' })
-    return { token, user: person }
+    return { token, user: omit(person, PRIVATE_FIELDS) }
   }
 
   const fetchCode = async ({ phone }) => {
@@ -157,10 +135,13 @@ const createApi = ({ mongo, secret }) => {
 
     phone = toPhone(phone)
     const code = await getCode()
-    return people.updateOne({ phone }, { code, lastCodeUpdate: Date.now() }, { upsert: true })
+    const updated = Date.now()
+
+    await people.updateOne({ phone }, { code, lastCodeUpdate: updated }, { upsert: true })
+    return { phone, code, updated }
   }
 
-  return { fetch, create, update, signin, fetchCode, createCode }
+  return { fetch, update, signin, fetchCode, createCode }
 }
 
 export default createApi
