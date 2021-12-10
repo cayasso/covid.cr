@@ -16,7 +16,7 @@
     "date-fns": "^2.11.1",
     "fuse.js": "^5.1.0",
     "hashids": "^2.2.1",
-    "is-email": "^1.0.0",
+    "is-email": "^1.0.1",
     "isomorphic-unfetch": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
